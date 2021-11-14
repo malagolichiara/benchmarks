@@ -1,0 +1,26 @@
+PREFIX=http://127.0.0.1:8000
+$(PREFIX)/
+$(PREFIX)/items/1 POST value=a%20random%20string
+$(PREFIX)/items/1
+$(PREFIX)/items/1
+$(PREFIX)/items/1
+$(PREFIX)/items/1
+$(PREFIX)/items/1
+$(PREFIX)/items/3
+$(PREFIX)/items/2 POST value=a%20random%20string%202
+$(PREFIX)/items/2
+$(PREFIX)/items/2
+$(PREFIX)/items/2
+$(PREFIX)/items/2
+$(PREFIX)/items/2
+$(PREFIX)/items/2
+$(PREFIX)/items/2
+$(PREFIX)/items/2
+$(PREFIX)/items/2
+$(PREFIX)/items/3
+$(PREFIX)/items/2
+$(PREFIX)/items/1
+
+
+
+

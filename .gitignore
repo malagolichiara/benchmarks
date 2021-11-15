@@ -1,3 +1,4 @@
 __pycache__
 /app-rocket/target
 /app-spark/target
+/app-fastify/node_modules

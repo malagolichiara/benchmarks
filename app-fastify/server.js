@@ -29,11 +29,11 @@ if (cluster.isMaster) {
   fastify.post('/items/:idx', async (request, reply) => {
     values[request.params.idx] = request.body.value
     return {
-      value: values[request.params.idx]
+      value: values[request.params.idx] || ''
     }
   })
 
-  fastify.listen(port, () => {
+  fastify.listen(port, '0.0.0.0', () => {
     console.log(`Fastify listening on port ${port}, PID: ${process.pid}`);
   });
 

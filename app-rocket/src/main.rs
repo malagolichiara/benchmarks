@@ -1,12 +1,24 @@
 #[macro_use]
+extern crate lazy_static;
+#[macro_use]
 extern crate rocket;
 
 use rocket::form::Form;
-use rocket::response::{Flash, Redirect};
+
+use std::collections::HashMap;
+use std::sync::Mutex;
+
+lazy_static! {
+    static ref HASHMAP: Mutex<HashMap<String, String>> = Mutex::new(HashMap::new());
+}
 
 #[get("/items/<idx>")]
 fn items(idx: &str) -> String {
-    format!("{}", idx)
+    let map = HASHMAP.lock().unwrap();
+    format!(
+        "{{ \"value\": \"{}\"}}",
+        map.get(idx).unwrap_or(&String::from("")),
+    )
 }
 
 #[derive(FromForm)]
@@ -15,11 +27,13 @@ struct Value<'r> {
 }
 
 #[post("/items/<idx>", data = "<value>")]
-fn new(idx: &str, value: Form<Value<'_>>) -> Flash<Redirect> {
+fn new(idx: &str, value: Form<Value<'_>>) -> &'static str {
     if value.value.is_empty() {
-        Flash::error(Redirect::to(uri!(index)), "Cannot be empty.")
+        return "Value cannot be empty.";
     } else {
-        Flash::success(Redirect::to(uri!(index)), format!("{} Task added.", idx))
+        let mut map = HASHMAP.lock().unwrap();
+        map.insert(String::from(idx), String::from(value.value));
+        return "OK";
     }
 }
 
